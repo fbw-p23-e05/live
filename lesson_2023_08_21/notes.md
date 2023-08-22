@@ -75,3 +75,14 @@
 | `<<` | Bitwise Left Shift Operator | 10 << 2 = 40 |
 | `>>` | Bitwise Right Shift Operator | 10 >> 1 = 5 |
 
+
+
+##### Extra Resources & Links
+ 
+https://sid-sharma1990.medium.com/number-system-in-python-11b0a10ea67b
+
+https://byjus.com/maths/number-system/#:~:text=A%20number%20system%20is%20defined,algebraic%20structure%20of%20the%20figures.
+
+https://realpython.com/python-bitwise-operators/#bitwise-shift-operators
+
+
