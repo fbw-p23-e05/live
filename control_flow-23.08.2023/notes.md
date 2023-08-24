@@ -35,3 +35,11 @@ Python has 3 types of control structures:
         - if-else
         - nested if
         - if-elif-else
+
+3. Repetition 
+
+    - A repetition statement is used to repeat a block of code multiple times. (looping)
+
+    - We have 2 repetition statements in Python:
+        - `for` loop - uses a counter. Iterates over lists, dictionaries, tuple or sets.
+        - `while` loop - uses a condition.
