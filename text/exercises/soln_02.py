@@ -62,3 +62,5 @@ last_name = 'Mansen'
 print(f'Firstname: {first_name}\nLastname: ' + f'{last_name}')
 
 # print('Firstname: ' + first_name + '\nLastname: ' + last_name)
+
+
