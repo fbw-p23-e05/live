@@ -82,6 +82,16 @@ A regular Expression (RegEx) is a sequence of characters that defines a search p
 | ma?n | `maaaan` | No match | 
 
 
+# Additional Resources
+
+https://www.geeksforgeeks.org/regular-expression-python-examples-set-1/
+https://docs.python.org/3/howto/regex.html
+https://regex101.com/
+http://web.archive.org/web/20090209182018/http://immike.net/blog/2007/04/06/the-absolute-bare-minimum-every-programmer-should-know-about-regular-expressions/
+https://www.slideshare.net/neha_jain/introducing-regular-expressions
+https://www.slideshare.net/neha_jain/advanced-regular-expressions-80296518
+https://regexone.com/
+
 
 
 
