@@ -64,6 +64,15 @@ A regular Expression (RegEx) is a sequence of characters that defines a search p
 | a$ | `formula` | 1 match |
 | a$ | `taxi` | No match  |
 
+### * - Star - used to match zero or more occurrences of the pattern left to it.
+
+| Expression | String | Result |
+|------------|--------|--------|
+| ma*n | `mn` | 1 match |
+| ma*n | `maan` | 1 match |
+| ma*n | `main` | No match |
+| ma*n | `maaaiaaan` | No match |
+
 ### + - Plus - matches one or more occurrences of the pattern left of it.
 
 | Expression | String | Result |
@@ -80,6 +89,55 @@ A regular Expression (RegEx) is a sequence of characters that defines a search p
 | ma?n | `mn` | 1 match |
 | ma?n | `man` | 1 match |
 | ma?n | `maaaan` | No match | 
+
+### {} - Braces - {n,m} This means at least n, and at most m repetitions of the pattern to the left of it.
+
+| Expression | String | Result |
+|------------|--------|--------|
+| a{2,3} | `abc dat` | No match |
+| a{2,3} | `abc daat` | 1 match (daat) |
+| a{2,3} | `aabc daaaat` | 2 matches |
+
+> Always tries to count to the maximum limit.
+
+[0-9]{2,4} # matches at least 2 digits but not more than 4.
+
+| Expression | String | Result |
+|------------|--------|--------|
+| [0-9]{2,4} | `ab123cbr` | 1 match | 
+| [0-9]{2,4} | `12 and 345678` | 3 matches |
+| [0-9]{2,4} | `1 and 3 k5` | No match |
+
+
+### | - Alternation - Vertical bar is used for alternation (or operator).
+
+| Expression | String | Result |
+|------------|--------|--------|
+| a|b | `cde` | No match |
+| a|b | `ade` | 1 match |
+| a|b | `acdbea` | 3 matches |
+
+
+### () - Group - Parentheses is used to group subpatterns. 
+
+| Expression | String | Result |
+|------------|--------|--------|
+| (a|b|c)xz | `ab xz` | No match |
+| (a|b|c)xz | `abcxy` | No match |
+| (a|b|c)xz | `axz cabxz` | 2 matches |
+| (a|b|c)xz | `abxz cvxz ybxe dcxz` | 2 matches |
+
+### \ - Backslash
+
+> Backslash is used to escape various characters including all metacharacters.
+
+`\$a` matches if a string contains the $ followed by a. 
+
+> $ will not be interpreted by RegEx in a special way.
+
+1.344
+
+[0-9]\.[0-9]{2,4}
 
 
 # Additional Resources
