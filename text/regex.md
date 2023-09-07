@@ -140,6 +140,10 @@ A regular Expression (RegEx) is a sequence of characters that defines a search p
 [0-9]\.[0-9]{2,4}
 
 
+### re module methods
+
+
+
 # Additional Resources
 
 https://www.geeksforgeeks.org/regular-expression-python-examples-set-1/
