@@ -104,3 +104,21 @@ import re
 # print(re.sub('Road', 'Rd', text))
 
 
+# Task 15
+
+# text = 'The quick brown fox jumps fox over the fox lazy dog, apple, and eagle....'
+
+# new_text = re.sub('[\s,.]', ':', text)
+
+# print(new_text)
+
+
+# Task 16
+
+text = 'The quick brown fox jumps fox over the fox lazy dog, apple, and eagle....'
+
+new_text = re.subn('[\s,.]', ':', text, count=2)
+
+print(new_text[0])
+
+
