@@ -67,7 +67,7 @@ def get_title(dtext=default_settings):
 
 # Task 4
 
-# def print_user_profile(gender='female', first=None, last='Doe', pictures=None):
+# def print_user_profile(gender='female', first=None, last='Doe', pictures=[]):
 
 def print_user_profile(gender='female', first=None, last='Doe', pictures=None):
 
