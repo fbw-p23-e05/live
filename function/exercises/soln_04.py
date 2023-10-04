@@ -17,8 +17,8 @@ def decorator(text, num):
 # Task 1
 
 # def make_bold(func):
-#     def inner(*args, **kwargs):
-#         return f'<strong>{func(*args, **kwargs)}<strong>'
+#     def inner():
+#         return f'<strong>{func()}<strong>'
 #     return inner
 
 # @make_bold
@@ -29,7 +29,12 @@ def decorator(text, num):
 
 # Task 2
 
+# def make_bold(func):
+#     def inner(*args, **kwargs):
+#         return f'<strong>{func(*args, **kwargs)}<strong>'
+#     return inner
 
+# @make_bold
 # def get_custom_html_greeting(first, last):
 #     return f'Hello, {first}, {last}!'
 
