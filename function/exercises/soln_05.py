@@ -74,6 +74,7 @@
 # Task 3
 
 def cache(func):
+    '''Returns value after calculation or from the cache memory.'''
     def inner(*args, dict_cache={}):
 
         if func not in dict_cache:
