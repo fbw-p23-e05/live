@@ -115,7 +115,7 @@ def count_pages(p_list):
         if 'pages' not in i:
             total = total + 1
         else:
-            total = total +1 + count_pages(i['pages'])
+            total = total + 1 + count_pages(i['pages'])
 
     return total
 
