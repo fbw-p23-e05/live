@@ -39,12 +39,13 @@ def pick_choice():
 
 
 def pick_1():
-    print('Items in warehouse 1:')
-    for i in warehouse1:
-        print(i)
     for i in warehouse2:
         print('Items in warehouse 2:')
         print(i)
+    print('Items in warehouse 1:')
+    for i in warehouse1:
+        print(i)
+    
 
 
 def pick_2():
@@ -55,6 +56,10 @@ def pick_2():
         count_1 = warehouse1.count(item)
     if item in warehouse2:
         count_2 = warehouse2.count(item)
+
+    if count_1 + count_2 == 0:
+    # if count_1 == 0 and count_2 == 0:
+        print('Sorry, the product is out of stock.')
 
     for i in warehouse1:
         if i == item:
