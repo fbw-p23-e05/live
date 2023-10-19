@@ -1,0 +1,14 @@
+### Downloading documents
+
+check if file type is allowed for download
+if the file type is allowed:
+	prompt user where to save the file and store in variable `save_location`
+	prompt user for filename and store in variable `filename`
+	Using the save_location save the file with the filename
+	Alert user on download progress
+	if download is finished:
+		Alert user of save location
+Else: 
+	Warn the user
+	Redirect user to different page
+	

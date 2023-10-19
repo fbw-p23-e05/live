@@ -1,0 +1,27 @@
+# User has uploaded file Y
+
+Check file for viruses.
+
+if file has virus:
+	warn the user
+	delete the file
+	block the user from from webiste.
+		grab the users IP address
+		save the IP to blacklist
+		send user email alerting them of blacklisting.
+else:
+	save the file
+	show user success message.'
+	
+#####
+create a function `virus_check` to check for virus in uploaded files
+	virus_check should return a boolean depending on whether the file has virus or not.
+	
+Create function `file_submission`
+Use the result of virus to create an if statement
+
+if file has virus:
+	######do the necessary
+else:
+	#Save file
+	Send message
