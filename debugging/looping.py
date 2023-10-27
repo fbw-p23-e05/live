@@ -11,7 +11,7 @@ def nested_loop():
     for number in num_list:
         print(number)
         for letter in alpha_list:
-            print(letter)
+            print(letter + str(number))
             
 
 nested_loop()
