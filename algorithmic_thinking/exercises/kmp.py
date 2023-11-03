@@ -27,9 +27,6 @@ num_list[0]
 num_list[1]
 
 
-
-
-
 # class OneBased:
 #     """A proxy object that allows sequences to use
 #     1-based indexing."""
