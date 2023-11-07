@@ -55,3 +55,8 @@
 
 * They offer controlled modification to ensure encapsulation and can include validation or processing before setting the attribute's value.
 
+#### Super() method
+
+* The super() method in Python allows a child class to access methods and properties from its parent or superclass. 
+
+* It's particularly useful for maintaining the inheritance hierarchy and ensuring correct method resolution order (MRO).

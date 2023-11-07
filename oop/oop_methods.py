@@ -152,11 +152,11 @@ class Smartphone(MobileTech):
         super().__init__(brand, ram, storage)
         self.model = model
         self.camera = camera
+        super().display_type()
 
     
     def display_type(self):
-        super().display_type()
-
+        # super().display_type()
         print('This phone has Amoled display.')
 
     
@@ -165,6 +165,8 @@ phone_1 = Smartphone('Apple', 6, 128, 'iPhone X', '12MP')
 print(phone_1.brand)
 print(phone_1.model)
 print(phone_1.display_type())
+
+
 
         
 
