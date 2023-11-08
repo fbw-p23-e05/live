@@ -1,4 +1,4 @@
-
+# Abstract Classes and methods
 
 # class Vehicle:
 
@@ -9,9 +9,6 @@
 # train = Vehicle()
 
 # print(train.move())
-
-
-
 
 
 from abc import ABC, abstractmethod
@@ -61,10 +58,14 @@ bike_1 = Bike()
 # print(bike_1.fuel())
 
 
+# Method Resolution Order (MRO)
+
 # print(Bike.mro())
 # print(Bike.__mro__)
 # print(dir(bike_1))
 
+
+# Mixins
 
 class FlyingAbilityMixin:
 
@@ -102,12 +103,7 @@ bike_marine = SubmarineBike()
 # print(SubmarineBike.mro())
 
 
-
-
 # Overloading
-
-
-
 
 class Calculator:
 
@@ -171,7 +167,7 @@ class Smartphone(MobileTech):
         super().__init__(brand, ram, storage)
         self.model = model
         self.camera = camera
-        super().display_type()
+        # super().display_type()
 
     
     def display_type(self):
