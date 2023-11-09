@@ -57,10 +57,10 @@ class Calculator:
 
     #     return self.number - self.other_obj1.number - self.other_obj2.number
     
-    # def __sub__(self, other_obj):
-    #     self.other_obj = other_obj
+    def __sub__(self, other_obj):
+        self.other_obj = other_obj
 
-    #     return self.number - self.other_obj.number
+        return self.number - self.other_obj.number
 
     def add_number(self, *args):
         self.args = args
@@ -82,14 +82,14 @@ calc_2 = Calculator(400)
 calc_3 = Calculator(700)
 
 
-
-
 # print(calc_1.__add__(10, 40, 2, 70, 2000))
 # print(calc_1 + calc_2 + calc_3)
 
 # __eq__, __lt__, __gt__
 
-print(calc_1 < calc_2)
+# print(calc_1 < calc_2)
+
+# print((50).__add__(20))
 
 # print(3 * 10)
 # print(300 + 400)
