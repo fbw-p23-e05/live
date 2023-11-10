@@ -136,6 +136,13 @@ class CarFactory(VehicleFactory):
 #     def create_vehicle(self):
 #         return Bike()
 
+class Factory(VehicleFactory):
+
+    def create_vehicle(self, type):
+        self.type = type
+        return start_factory(self.type)
+    
+
 class BikeFactory(VehicleFactory):
 
     def create_vehicle(self, type):
@@ -168,6 +175,10 @@ def start_factory(type):
 
 car_factory_1 = CarFactory()
 bike_factory_1 = BikeFactory()
+
+bike_factory_2 = Factory()
+aeroplane_factory_1 = Factory()
+
 
 print(car_factory_1.create_vehicle('car').move())
 print(bike_factory_1.create_vehicle('bike').move())
