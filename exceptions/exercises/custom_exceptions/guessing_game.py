@@ -16,7 +16,7 @@ toss_dict = {0: 'tails', 1: 'heads'}
 toss = toss_dict[random.randint(0, 1)] # 0 is tails, 1 is heads
 
 
-if toss == guess: # 0 == 'heads'
+if toss == guess: # 0 == 'tails'
     print('You got it!')
 else:
     print('Nope! Guess again!')
