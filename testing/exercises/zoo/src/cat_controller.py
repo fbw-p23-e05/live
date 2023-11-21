@@ -1,5 +1,7 @@
 class CatController:
 
+    # hour = None
+
     # TODO: You need to write the code for this class based on what the tests
     # expect.
 
@@ -31,7 +33,11 @@ class CatController:
         elif self.hour == 20:
             return "Close cat cage."
         else:
-            return ''
+            return 'Turn off the light and let the cat sleep.'
+        
+
+    # def light_check(self):
+    #     if self.hour > 20:
         
 
         
