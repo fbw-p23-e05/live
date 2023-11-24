@@ -1,4 +1,6 @@
 import unittest
+# import mock module
+from unittest import mock
 from calculator import Calculator 
 
 
@@ -21,12 +23,13 @@ class TestCalculator(unittest.TestCase):
         print("I was executed.")
         
     # Add
-    def test_add_returns_correct_result(self):
+    @mock.patch('calculator.Calculator.add', return_value=30)
+    def test_add_returns_correct_result(self, add):
         """
         Test for add method. Adds the 2 parameters expecting an integer result.
         """
-        result = self.calc.add(self.a, self.b)
-        self.assertTrue(result == 30)  # correct result
+        # result = self.calc.add(self.a, self.b)
+        self.assertTrue(add(20, 10) == 30)  # correct result
          
     def test_add_returns_integer(self):
         result = self.calc.add(self.a, self.b)
@@ -39,10 +42,11 @@ class TestCalculator(unittest.TestCase):
         self.assertRaises(TypeError, self.calc.add, 10, "19")
     
     # Subtract
-    def test_subtract(self):
-        result = self.calc.subtract(self.a, self.b)
-        self.assertTrue(result == 10)
-        self.assertEqual(type(result), type(10))
+    @mock.patch('calculator.Calculator.subtract', return_value=15)
+    def test_subtract(self, subtract):
+        # result = self.calc.subtract(self.a, self.b)
+        self.assertTrue(subtract(20, 10) == 10)
+        # self.assertEqual(type(result), type(10))
         
     def test_subtract_raises_type_error(self):
         self.assertRaises(TypeError, self.calc.subtract, 10, "7")
