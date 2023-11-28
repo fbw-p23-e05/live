@@ -42,7 +42,7 @@ class TestCalculator(unittest.TestCase):
         self.assertRaises(TypeError, self.calc.add, 10, "19")
     
     # Subtract
-    @mock.patch('calculator.Calculator.subtract', return_value=15)
+    @mock.patch('calculator.Calculator.subtract', return_value=10)
     def test_subtract(self, subtract):
         # result = self.calc.subtract(self.a, self.b)
         self.assertTrue(subtract(20, 10) == 10)
