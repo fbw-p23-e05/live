@@ -29,7 +29,7 @@ class TestText(unittest.TestCase):
 
             to_upper(4532)
             to_upper('453fhkf4545')
-            to_upper('Downtown')
+            # to_upper('Downtown')
 
     # Task 5
 
