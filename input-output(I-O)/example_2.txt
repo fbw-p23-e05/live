@@ -1,0 +1,1 @@
+This is a lovely way to manipulate files. Python Rocks!Trying out the append mode.Trying out the append mode!
