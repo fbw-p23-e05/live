@@ -49,15 +49,16 @@ class TestRemove(unittest.TestCase):
 
     # Task 5
     @mock.patch('app.os.path') # 2nd
-    @mock.patch('app.os') # 1st
-    def test_rm_delete_file_not_exist(self, mock_os, mock_path):
+    # @mock.patch('app.os') # 1st
+    def test_rm_delete_file_not_exist(self, mock_path):
 
         mock_path.isfile.return_value = False
 
         with self.assertRaises(FileNotFoundError):
 
-            rm('anotherfile.txt')
-
+            # rm('somefile1.txt')
+            rm('anotherfile1.txt')
+            
 
 if __name__ == '__main__':
     unittest.main()
