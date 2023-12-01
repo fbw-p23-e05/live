@@ -30,7 +30,7 @@ files = [
     },
     {
         "name": "bookmarks.txt",
-        "content": ["https://google.com", "https://digitalcareerinstitute.org"]
+        "content": ["My links:", "", "https://google.com", "https://digitalcareerinstitute.org"]
     }
 ]
 ```
