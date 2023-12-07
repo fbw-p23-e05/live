@@ -1,3 +1,4 @@
 customers_venv/
 employees_venv/
 __pycache__/
+.venv/

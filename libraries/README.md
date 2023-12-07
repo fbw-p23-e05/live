@@ -17,12 +17,20 @@
 
 1. Create the virtual environment
     ```
+    # Linux
     python3 -m venv <environment_name>
+
+    # Windows 
+    python -m venv <environment_name>
     ```
 
 2. Activate the virtual environment
     ```
+    # Linux
     source <environment_name>/bin/activate
+
+    # Windows
+    <environment_name>\Scripts\activate
     ```
 
 3. Install/download a package
