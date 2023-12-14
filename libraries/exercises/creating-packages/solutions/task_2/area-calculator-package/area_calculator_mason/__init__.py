@@ -1,0 +1,5 @@
+from area_calculator_mason.area_calculator_dci import square
+from area_calculator_mason.area_calculator_dci import welcome
+from area_calculator_mason.area_calculator_dci import rectangle
+from area_calculator_mason.area_calculator_dci import triangle
+from .area_calculator_dci import circle
