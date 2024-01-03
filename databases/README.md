@@ -36,3 +36,23 @@ psql
 # Change root user password
 ALTER USER postgres WITH PASSWORD 'postgres';
 ```
+
+
+## Running an SQL Script from Command line.
+
+```shell
+# Accessing PostgreSQL
+sudo su postgres
+
+# Access postgreSQL Server
+psql
+
+# Create the Database
+CREATE DATABASE <database_name>;
+
+# Connect to the Database
+\c <database name>;
+
+# Run SQL Script 
+\i <path to SQL Script>
+```
