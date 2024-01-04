@@ -57,7 +57,7 @@ SET ROLE <username>
 1. Create the following script and save it.
     ```sql
     CREATE TABLE artists(
-        artist_id INT PRIMARY KEY,
+        artist_id SERIAL PRIMARY KEY,
         first_name TEXT,
         last_name TEXT,
         email_address VARCHAR(100),
@@ -66,7 +66,7 @@ SET ROLE <username>
     );
 
     CREATE TABLE art_pieces(
-        art_piece_id INT PRIMARY KEY,
+        art_piece_id SERIAL PRIMARY KEY,
         art_piece_name TEXT,
         description TEXT,
         date_of_creation DATE,
