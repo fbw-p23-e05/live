@@ -78,7 +78,7 @@ SET ROLE <username>
         date_of_creation DATE,
         genre TEXT NOT NULL,
         price DECIMAL NOT NULL,
-        artist_id INT NOT NULL REFERENCES artists(artist_id) ON DELETE SET NULL,
+        artist_id INT REFERENCES artists(artist_id) ON DELETE SET NULL,
         UNIQUE(artist_id, art_piece_name) -- TABLE constraint
     );
 
