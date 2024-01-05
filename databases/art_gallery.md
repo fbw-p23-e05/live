@@ -56,24 +56,32 @@ SET ROLE <username>
 
 1. Create the following script and save it.
     ```sql
-    CREATE TABLE artists(
+    -- Create artists and art pieces tables
+    -- Establish Foreign Key Relationship between both tables using artist_id field
+    DROP TABLE IF EXISTS art_pieces;
+    DROP TABLE IF EXISTS artists;
+
+    CREATE TABLE IF NOT EXISTS artists(
         artist_id SERIAL PRIMARY KEY,
-        first_name TEXT,
+        first_name TEXT NOT NULL,
         last_name TEXT,
-        email_address VARCHAR(100),
-        art_style TEXT,
-        date_of_birth DATE
+        email_address VARCHAR(100) UNIQUE NOT NULL,
+        art_style TEXT NOT NULL,
+        date_of_birth DATE,
+        UNIQUE(first_name, last_name)
     );
 
-    CREATE TABLE art_pieces(
+    CREATE TABLE IF NOT EXISTS art_pieces(
         art_piece_id SERIAL PRIMARY KEY,
-        art_piece_name TEXT,
+        art_piece_name TEXT UNIQUE NOT NULL, -- COLUMN Constraint
         description TEXT,
         date_of_creation DATE,
-        genre TEXT,
-        price DECIMAL,
-        artist_id INT REFERENCES artists(artist_id)
+        genre TEXT NOT NULL,
+        price DECIMAL NOT NULL,
+        artist_id INT NOT NULL REFERENCES artists(artist_id) ON DELETE SET NULL,
+        UNIQUE(artist_id, art_piece_name) -- TABLE constraint
     );
+
     ```
 
 2. From the command line run the script with the following command:
@@ -94,11 +102,9 @@ SET ROLE <username>
         art_style,
         date_of_birth
     )
-    VALUES ('Pablo', 'Picasso', 'ppicasso@gmail.com', 'Expressionist', '1881-10-25'),
-            ('Vincent', 'van Gogh', 'vvangogh@gmail.com', 'Post-Impressionist', '1853-03-30'),
-            ('Claude', 'Monet', 'cmonet@gmail.com', 'Impressionist', '1840-11-14');
+    VALUES ('', 'Brown', 'jbrown@mail.com', 'Doodler', '2001-09-15')
+    ON CONFLICT DO NOTHING;
             
-
     INSERT INTO art_pieces(
         art_piece_name,
         description,
@@ -107,9 +113,8 @@ SET ROLE <username>
         price,
         artist_id
     )
-    VALUES ('The Self-Portrait', 'Painting of himself.', '1889-09-01', 'Post-Impressionism', 120000000.00, 2),
-            ('The Old Guitarist', 'Elderly guitar player on the street', '1904-03-01', 'Expressionism', 100000000.00, 1),
-            ('The Water Lily Pond', 'A painting of a pond.', '1899-12-01', 'Impressionism', 70400000.00, 3);
+    VALUES ('Mona Lisa', 'Painting of beautiful woman.', '1503-12-01', 'Renaissance', 860000000, 5)
+    ON CONFLICT DO NOTHING;
     ```
 
 2. From the command line run the script with the following command:
@@ -125,3 +130,8 @@ SET ROLE <username>
 ALTER TABLE <table name>
 ALTER COLUMN <column name> [SET DATA] TYPE <new data type>;
 ```
+
+
+- Handling database/table duplication
+- Ensuring uniqueness of records
+- Handling null columns/cells
