@@ -126,7 +126,7 @@ psql
 |----------|-------------|	
 | `psycopg2.connect(database="testdb", user="postgres", password="cohondob", host="127.0.0.1", port="5432")` | This API opens a connection to the PostgreSQL database. If database is opened successfully, it returns a connection object. |
 |  `connection.cursor()` | This routine creates a cursor which will be used throughout of your database programming with Python. |
-| `cursor.execute(sql [, optional parameters])` | This routine executes an SQL statement. The SQL statement may be parameterized (i.e., placeholders instead of SQL literals). The psycopg2 module supports placeholder using %s sign. For example:cursor.execute("insert into people values (%s, %s)", (who, age)) |
+| `cursor.execute(sql [, optional parameters])` | This routine executes an SQL statement. The SQL statement may be parameterized (i.e., placeholders instead of SQL literals). The psycopg2 module supports placeholder using %s sign. For example: `cursor.execute("insert into people values (%s, %s)", (who, age))` |
 | `cursor.executemany(sql, seq_of_parameters)` | This routine executes an SQL command against all parameter sequences or mappings found in the sequence sql. |
 | `cursor.callproc(procname[, parameters])` | This routine executes a stored database procedure with the given name. The sequence of parameters must contain one entry for each argument that the procedure expects. |
 | `cursor.rowcount` | This read-only attribute which returns the total number of database rows that have been modified, inserted, or deleted by the last last execute*(). |
