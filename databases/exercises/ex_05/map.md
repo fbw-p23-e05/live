@@ -64,4 +64,73 @@ ORDER BY city.area
 LIMIT 1;
 
 
+# Task 7
+
+SELECT city.name, country.name, country.population FROM city, country WHERE city.country_id = country.id 
+
+AND city.is_capital = TRUE
+
+ORDER BY country.population DESC 
+
+LIMIT 3;
+
+# Task 8
+
+DELETE FROM country WHERE name='Germany';
+
+SELECT * FROM city;
+
+# Task 9
+
+ALTER TABLE country ADD COLUMN code CHAR(2) UNIQUE;
+
+\i country.sql
+
+SELECT name, code FROM country;
+
+\i country_test.sql
+
+
+# Task 10
+
+CREATE TABLE language(
+code CHAR(2) PRIMARY KEY,
+name VARCHAR(50));
+
+\i language.sql
+
+SELECT name, code FROM language;
+
+
+\i language_test.sql
+
+
+# Task 11
+
+DROP TABLE IF EXISTS locale;
+
+CREATE TABLE locale(
+name VARCHAR(30),
+language_code CHAR(2) REFERENCES language(code),
+country_code CHAR(2) REFERENCES country(code),
+PRIMARY KEY (language_code, country_code)
+);
+
+\i locale.sql
+
+SELECT * FROM locale;
+
+\i locale_test.sql
+
+# Task 12
+
+SELECT locale.name AS "Locale",
+country.name AS "country",
+language.name AS "Language" FROM 
+locale, country, language
+WHERE locale.language_code=language.code
+AND locale.country_code=country.code
+ORDER BY language.name;
+
+
 
