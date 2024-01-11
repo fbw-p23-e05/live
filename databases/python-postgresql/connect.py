@@ -11,7 +11,7 @@ def connect():
     conn = None
     
     try:
-        # connect to the PostgreSQL Server
+        # Connect to the PostgreSQL Server
         print("Connecting to the PostgreSQL Database")
         conn = psycopg2.connect(
             host=os.environ.get("DB_HOST"),
@@ -24,7 +24,7 @@ def connect():
         # Create a cursor
         cur = conn.cursor()
         
-        # Excute a statement
+        # Execute a statement
         cur.execute("SELECT version();")
         
         # Display the database
