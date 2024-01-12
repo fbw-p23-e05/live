@@ -27,6 +27,7 @@ def update_vendor(vendor_id, **kwargs):
         # Create a cursor
         cur = conn.cursor()
 
+        # new = list(k for k in kwargs.keys())
         # new = tuple((k, j) for k, j in (kwargs.keys(), kwargs.values()))
         # emp = []
         # for part in new:
@@ -35,11 +36,16 @@ def update_vendor(vendor_id, **kwargs):
         # tup = tuple(emp)
         # print(tup)
 
+
         # cur.execute("UPDATE vendors SET %s=%s, %s=%s WHERE vendor_id=%s", (tuple((kwarg for kwarg in kwargs.values())) + (vendor_id,)))
 
-        # cur.execute("UPDATE vendors SET %s=%s, %s=%s WHERE vendor_id=%s", tup + (vendor_id,))
+        # cur.execute('UPDATE vendors SET %s=%s, %s=%s WHERE vendor_id=%s', (tup + (vendor_id,)))
 
-        cur.execute("UPDATE vendors SET %s=%s, %s=%s WHERE vendor_id=%s", tuple((kwarg for kwarg in kwargs.values())) + tuple((kwarg for kwarg in kwargs.values())) + (vendor_id,))
+        # cur.execute("UPDATE vendors SET %s, %s WHERE vendor_id=%s", tup + (vendor_id,))
+
+        cur.execute("UPDATE vendors SET {}=%s, {}=%s WHERE vendor_id=%s".format(*list(kwarg for kwarg in kwargs.keys())), tuple((kwarg for kwarg in kwargs.values())) + (vendor_id,))
+
+
 
         # cur.execute('Update vendors set %s where vendor_id=%s', ', '.join(k+'="'+v+'"' for k, v in kwargs.items()), vendor_id)
         # cur.execute("DELETE FROM products WHERE product_id=%s", (product_id,))
@@ -71,6 +77,6 @@ def update_vendor(vendor_id, **kwargs):
 
 
 # print(create_customer('Jhonty Rhodes', 'Entertainment'))
-print(update_vendor(3, vendor_name='Oneplus Inc.', industry='Mobile Technology'))
+print(update_vendor(3, vendor_name='Lenovo', industry='Electronics'))
 
 

@@ -2,11 +2,17 @@
 
 dict = {'vendor_name':'Amazon Inc.', 'industry':'Ecommerce'}
 
-# dict2 = list([k,j] for k,j in (dict.keys(), dict.values()))
+# dict2 = ','.join(list(','.join([k,j]) for k,j in (dict.keys(), dict.values())))
 
 # dict2 = list(k + ', ' + j for k,j in (dict.keys(), dict.values()))
 
-dict2 = list([k,j] for k,j in (dict.keys(), dict.values()))
+# dict2 = list(','.join([k,j]) for k,j in (dict.keys(), dict.values()))
+
+# dict2 = ','.join(list(kwarg for kwarg in dict.keys()))
+
+# dict2 = list(kwarg for kwarg in dict.keys())
+
+dict2 = tuple((k, j) for k, j in (dict.keys(), dict.values()))
 
 # new = tuple((k, j) for k, j in (dict.keys(), dict.values()))
 # str = []
@@ -15,8 +21,8 @@ dict2 = list([k,j] for k,j in (dict.keys(), dict.values()))
 #         str.append(second_part)
 # print(tuple(str))
 
-for i in dict2:
-    print(i)
+# for i in dict2:
+#     print(i)
 print(dict2)
 print(type(dict2))
 
