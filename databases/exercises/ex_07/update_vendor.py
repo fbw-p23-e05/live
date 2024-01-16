@@ -77,6 +77,6 @@ def update_vendor(vendor_id, **kwargs):
 
 
 # print(create_customer('Jhonty Rhodes', 'Entertainment'))
-print(update_vendor(3, vendor_name='Lenovo', industry='Electronics'))
+print(update_vendor(3, vendor_name='Dell', industry='Electronics'))
 
 
