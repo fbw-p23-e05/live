@@ -5,7 +5,7 @@
 - UUID
 - Json
 - Binary
-- Temporal (Time, Date, DateTime, Interval)
+- Temporal (Time, Date, TimeStamp, Interval)
 
 1. **Enumeration**
 
@@ -80,3 +80,107 @@
         <column 2> json
     )
     ```
+
+5. **bytea**
+
+    - There 2 ways to store files as in a database:
+        1. Reference - The file is stored on the file system of the machine/server and there is a field in the database storing the path to the file as a text/string.
+        2. Value - The file is stored directly in the database as a binary object. 
+
+    ```
+    CREATE TABLE <table name> (
+        <column 1> <data type>,
+        <column 2> bytea
+    );
+    ```
+
+6. **Temporal (Date, Time, Timestamp, Interval)**
+
+    1. Time:
+
+        ```
+        column_name TIME(precision)
+        ```
+        - A time value may have a precision of up to 6 digits. The precision specifies the number of fractional digits in the seconds field
+
+        ```
+        HH:MI #12:45
+        HH:MI:SS # 12:45:32
+        HHMISS # 124532
+        ```
+
+        If we use precision:
+        ```
+        MI:SS.pppppp # 03:45.656665
+        HH:MI:SS.pppppp # 20:56:26.777777
+        HHMISS.pppppp # 205626.777777
+        ```
+    
+    2. Timestamp:
+
+        `timestamp`: a timestamp without timezone one.
+
+        `timestamptz`: timestamp with a timezone.
+        
+        The timestamp datatype allows you to store both date and time. However, it does not have any time zone data. It means that when you change the timezone of your database server, the timestamp value stored in the database will not change automatically.
+
+        The timestamptz datatype is the timestamp with the time zone. The timestamptz datatype is a time zone-aware date and time data type.
+
+        PostgreSQL stores the timestamptz in UTC value. 
+
+        When you insert a value into a timestamptz column, PostgreSQL converts the timestamptz value into a UTC value and stores the UTC value in the table.
+        When you query timestamptz from the database, PostgreSQL converts the UTC value back to the time value of the timezone set by the database server, the user, or the current database connection.
+
+        ```
+        CREATE TABLE <table name>(
+            ts_1 TIMESTAMP,
+            ts_2 TIMESTAMPTZ
+        );
+        ```
+    
+    3. Interval:
+
+        - The interval data type allows you to store and manipulate a period of time in years, months, days, hours, minutes, seconds, etc.
+        - PostgreSQL stores interval values as months, days, and seconds. The months and days values are integers while the seconds can field can have fractions.
+
+        - The interval values are very useful when doing date or time arithmetic. For example, if you want to know the time of 3 hours 2 minutes ago at the current time of last year
+
+        In addition to the verbose syntax, PostgreSQL allows you to write the interval values using ISO 8601 time intervals in two ways: format with designators and alternative format.
+
+        The ISO 8601 format with designators is like this:
+
+        ```
+        P quantity unit [ quantity unit ...] [ T [ quantity unit ...]]
+        ```
+
+        In this format, the interval value must start with the letter P. The letter T is for determining time-of-day unit.
+
+        The following table illustrates the ISO 8601 interval unit abbreviations:
+
+        | Abbreviation | Description |
+        |--------------|-------------|
+        | Y | Years|
+        | M | Months (in the date part)|
+        | W	| Weeks |
+        | D	| Days |
+        | H | Hours |
+        | M | Minutes (in the time part) |
+        | S	| Seconds |
+        > Note that M can be months or minutes depending on whether it appears before or after the letter T.
+
+        For example, the interval of 6 years 5 months 4 days 3 hours 2 minutes 1 second can be written in the ISO 8601 designators format as follows:
+        ```
+        P6Y5M4DT3H2M1S
+        ```
+        
+        The alternative form of ISO 8601 is:
+
+        ```
+        P [ years-months-days ] [ T hours:minutes:seconds ]
+        ```
+
+        It also must start with the letter P, and the letter T separates the date and time parts of the interval value. For example, the interval of 6 years 5 months 4 days 3 hours 2 minutes 1 second can be written in the ISO 8601 alternative form as:
+
+        ```
+        P0006-05-04T03:02:01
+        ```
