@@ -3,6 +3,9 @@
 ```
 LOCK TABLE <table_name>
 IN <Lock Mode> [NOWAIT]
+
+-- Checking locks 
+SELECT locktype, mode, relation::regclass FROM pg_locks;
 ```
 
 ## Lock Modes
