@@ -11,3 +11,6 @@ class Visitor(models.Model):
     visitor_name = models.CharField(max_length=150)
     time_of_visit = models.DateTimeField(auto_now=True)
     purchases = models.TextField()
+
+    def __str__(self):
+        return self.visitor_name
