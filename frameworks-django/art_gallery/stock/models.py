@@ -14,3 +14,6 @@ class Visitor(models.Model):
 
     def __str__(self):
         return self.visitor_name
+    
+
+    

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "stock.apps.StockConfig",
     "clients",
     "django_extensions",
+    "shop",
 ]
 
 MIDDLEWARE = [
