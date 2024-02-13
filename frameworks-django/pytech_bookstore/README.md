@@ -13,3 +13,11 @@
 7. connect to database in Django
 8. Create django app - store
 9. Create Models - Authors and Books
+
+## Model Relationships
+
+- One-to-One Relationships
+- One-to-Many Relationships
+- Many-to-Many relationships
+- Querying related objects
+- Related manager
