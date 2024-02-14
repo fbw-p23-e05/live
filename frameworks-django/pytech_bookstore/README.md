@@ -21,3 +21,7 @@
 - Many-to-Many relationships
 - Querying related objects
 - Related manager
+
+## Eager vs Lazy Loading
+
+## Django Admin Panel
