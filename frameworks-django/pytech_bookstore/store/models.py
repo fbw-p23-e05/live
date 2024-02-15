@@ -15,6 +15,9 @@ from django.utils.text import slugify
 class Genre(models.Model):
     name = models.CharField(max_length=200, unique=True)
     
+    class Meta:
+        ordering = ["name",]
+    
     def __str__(self):
         return str(self.name) 
 
@@ -60,6 +63,9 @@ class Book(models.Model):
     slug = models.SlugField()
     discount = models.IntegerField()
     
+    class Meta:
+        ordering = ["title", "author",]
+    
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.title))
         self.discount = self.price // 5
@@ -68,6 +74,7 @@ class Book(models.Model):
 
     def __str__(self):
         return str(self.title)
+
 
 class StoreManager(models.Model):
     first_name = models.CharField(max_length=100)
