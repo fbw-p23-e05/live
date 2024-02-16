@@ -25,3 +25,10 @@
 ## Eager vs Lazy Loading
 
 ## Django Admin Panel
+
+## Templating
+
+- Setting up templates and static files
+- using the render method in a function based view
+- Using templates with class based views
+- Template tags (for, if)
