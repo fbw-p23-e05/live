@@ -2,15 +2,12 @@ from django.http import HttpResponse
 from .models import Author, Book, Genre, StoreManager, StoreLocation
 from django.views import View
 from django.urls import reverse
+from django.shortcuts import render
 
 
 def index(request):
-    authors_link = f"<a href={reverse('store:author_list')}>Authors</a>"
-    books_link = f"<a href={reverse('store:book_list')}>Books</a>"
-    genres_link = f"<a href={reverse('store:genre_list')}>Genres</a>"
-    
-    content = f"<ul>{authors_link} {books_link} {genres_link}</ul>"
-    return HttpResponse(content)
+    num_of_books = Book.objects.all().count()
+    return render(request, "store/index.html", {"num_of_books": num_of_books})
     
 
 class AuthorListView(View):
@@ -18,18 +15,7 @@ class AuthorListView(View):
     def get(self, request):
         # Retrieving the full list of authors as queryset
         authors = Author.objects.all()
-        
-        # Initialize the content variable
-        content = ""
-        
-        # Loop over the authors queryset
-        for author in authors:
-            # Create a HTML list element that includes each authors names
-            new_author = f"<li>{author}</li>"
-            # append the HTML element to content
-            content += new_author
-            
-        return HttpResponse(content)
+        return render(request, "store/author_list.html", {"authors": authors})
 
 
 class BookListView(View):
