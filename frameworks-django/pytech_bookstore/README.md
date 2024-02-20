@@ -32,3 +32,12 @@
 - using the render method in a function based view
 - Using templates with class based views
 - Template tags (for, if)
+
+## Django Forms
+
+- How to create a from
+- displaying a form in the template
+- csrf tokens
+- Model Forms vs Forms
+- Form validations
+- FormView class

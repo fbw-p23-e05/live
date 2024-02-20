@@ -1,8 +1,9 @@
 from django.http import HttpResponse
-from .models import Author, Book, Genre, StoreManager, StoreLocation
+from .models import Author, Book, Genre, StoreManager, StoreLocation, Contact
 from django.views import View
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import ContactForm, BookForm
 
 
 def index(request):
@@ -22,15 +23,24 @@ class BookListView(View):
     
     def get(self, request):
         books = Book.objects.all()
-        content = ""
+        form = BookForm()
+        return render(request, 'store/book_list.html', {
+            "books": books, "form": form                                                                                                     
+        })
         
-        for book in books:
-            new_book = f"<li>{book} - {book.author}</li>"
-            content += new_book
-            
-        return HttpResponse(content)
+    def post(self, request):
+        form = BookForm(request.POST)
+        books = Book.objects.all()
+        
+        if form.is_valid():
+            form.save()
+            return redirect('store:book_list')
+        else:
+            return render(request, "store/book_list.html", {
+                "form": form, "books": books
+                })                     
     
-
+                          
 class GenreListView(View):
     
     def get(self, request):
@@ -42,3 +52,32 @@ class GenreListView(View):
             content += new_genre
             
         return HttpResponse(content)
+
+
+def contact(request):
+    # create the form object/instance
+    form = ContactForm()
+    
+    # send the form as context to the template
+    if request.method == "GET":
+        return render(request, "store/contact.html", {"form": form})
+    
+    # Saving to DB
+    elif request.method == "POST":
+        # receive the form using a POST request
+        form = ContactForm(request.POST)
+    
+        # Validate the form inputs
+        if form.is_valid():
+            # Save the inputs to DB
+            print(form.cleaned_data['phone_number'])
+            new_contact = Contact(
+                name=form.cleaned_data['name'], email=form.cleaned_data['email'],
+                phone_number=form.cleaned_data['phone_number'], 
+                message=form.cleaned_data['message'])
+            new_contact.save()
+            # redirect to home page after successful save
+            return redirect('store:home')
+        else:
+            return render(request, 'store/contact.html', {"form": form})
+    
