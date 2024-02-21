@@ -32,6 +32,7 @@
 - using the render method in a function based view
 - Using templates with class based views
 - Template tags (for, if)
+- Template filters
 
 ## Django Forms
 

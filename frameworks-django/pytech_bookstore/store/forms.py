@@ -1,5 +1,5 @@
 from django import forms 
-from .models import Book
+from .models import Book, Author
 
 
 class ContactForm(forms.Form):
@@ -16,3 +16,11 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ['title', 'author', 'summary', 'isbn', 'genre', 'date_of_publishing', 'in_stock', 'price']
         exclude = ['discount', 'slug']
+
+
+class AuthorForm(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}))
+    
+    class Meta:
+        model = Author
+        exclude = ['created_on', 'last_updated']

@@ -1,9 +1,12 @@
+from typing import Any
 from django.http import HttpResponse
 from .models import Author, Book, Genre, StoreManager, StoreLocation, Contact
 from django.views import View
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from .forms import ContactForm, BookForm
+from .forms import ContactForm, BookForm, AuthorForm
+from django.views.generic.edit import FormView
+from django.views.generic import TemplateView
 
 
 def index(request):
@@ -17,6 +20,16 @@ class AuthorListView(View):
         # Retrieving the full list of authors as queryset
         authors = Author.objects.all()
         return render(request, "store/author_list.html", {"authors": authors})
+    
+    
+class AuthorCreateView(FormView):
+    template_name = "store/create_author.html"
+    form_class = AuthorForm
+    success_url = "/store/authors/"
+
+    def form_valid(self, form):
+        form.save()
+        return super(AuthorCreateView, self).form_valid(form)
 
 
 class BookListView(View):
@@ -41,17 +54,14 @@ class BookListView(View):
                 })                     
     
                           
-class GenreListView(View):
+class GenreListView(TemplateView):
+    template_name = "store/genre_list.html"
     
-    def get(self, request):
-        genres = Genre.objects.all()
-        content = ""
-        
-        for genre in genres:
-            new_genre = f"<li>{genre}</li>"
-            content += new_genre
-            
-        return HttpResponse(content)
+    def get_context_data(self, *args, **kwargs):
+        context = super(GenreListView, self).get_context_data(*args, **kwargs)
+        context['genres'] = Genre.objects.all()
+        context['random'] = "Just some random context"
+        return context
 
 
 def contact(request):
@@ -79,5 +89,5 @@ def contact(request):
             # redirect to home page after successful save
             return redirect('store:home')
         else:
-            return render(request, 'store/contact.html', {"form": form})
+            return render(request, 'store/contact.html', {"form": form})  
     
