@@ -42,3 +42,10 @@
 - Model Forms vs Forms
 - Form validations
 - FormView class
+
+## Testing
+
+- what Django provides for testing
+- How to use the django TestCase class
+- Structure of test files
+- Structure of the Test classes(test suites)

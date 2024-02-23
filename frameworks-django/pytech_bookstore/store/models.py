@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse
 
 # GENRE_CHOICES = (
 #         ('0', 'None'),
@@ -27,7 +28,7 @@ class Author(models.Model):
     last_name = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, unique=True, db_index=True)
     # genre = models.ManyToManyField(Genre)
-    date_of_birth = models.DateField(null=False)
+    date_of_birth = models.DateField(null=False, verbose_name="Date of birth")
     created_on = models.DateField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
     num_of_books = models.IntegerField()
@@ -49,6 +50,9 @@ class Author(models.Model):
         
     def __str__(self):
         return str(self.first_name + ' ' + self.last_name)
+    
+    def get_absolute_url(self):
+        return reverse("store:author_detail", args=[self.id])    
         
 
 class Book(models.Model):
