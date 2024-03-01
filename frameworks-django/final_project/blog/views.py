@@ -5,6 +5,8 @@ from django.db.models import Q
 
 from .forms import SearchForm, PostForm
 
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 # def post_list(request):
@@ -25,7 +27,7 @@ def post_list(request):
     return render(request, 'blog/post_list.html', {'posts': posts, 'form': form})
 
 
-
+@login_required
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
