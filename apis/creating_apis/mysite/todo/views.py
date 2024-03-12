@@ -2,6 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.authentication import BasicAuthentication
 from .serializers import TaskSerializer
 from .models import Task
 from rest_framework.viewsets import ViewSet
@@ -32,6 +34,8 @@ from django.shortcuts import get_object_or_404
 class ListTasks(ListCreateAPIView):
     queryset = Task.objects.filter(completed=False)
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
+    # authentication_classes = [BasicAuthentication]
 
 
 class TaskViewSet(ViewSet):

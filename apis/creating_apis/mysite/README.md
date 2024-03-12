@@ -207,3 +207,89 @@ urlpatterns =[
     path("<int:pk>/", views.TaskViewSet.as_view(), name="retrieve_task"),
 ]
 ```
+
+## Authentication
+
+- security concerns
+- Adding authentication:
+    - BasicAuthentication
+    - TokenAuthentication
+- sanitization and validation.
+
+**BasicAuthenticaton:**
+
+1. Add the authentications defaults to settings.py:
+
+    ```python
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': [
+            'rest_framework.authentication.BasicAuthentication',
+        ]
+    }
+    ```
+
+2. Add permission classes to API Views
+
+    ```python
+    from rest_framework.permissions import IsAuthenticated
+
+    # add permissions to specific views 
+    permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly]
+    ```
+
+2. create a user to test with
+
+    ```
+    python manage.py createsuperuser
+    ```
+
+3. Test our APIs with Postman
+
+4. A basic to specific APIss:
+
+    ```python
+    from rest_framework.authentication import BasicAuthentication
+
+    # add API level auth
+    authentication_classes = [BasicAuthentication]
+    ```
+
+**TokenAuthentication:**
+
+1. Activating the authtoken in settings.py:
+
+    ```python
+    INSTALLED_APPS = [
+        # .... other apps
+        'rest_framework.authtoken',
+    ]
+
+1. add the settings
+
+    ```python
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': [
+            # ....
+            'rest_framework.authentication.TokenAuthentication',
+        ]
+    }
+
+2. create a endpoint to generate an authentication token in todo/urls.py:
+
+    ```python
+    from rest_framework.authtoken.views import obtain_auth_token
+
+    urlpatterns = [
+        # ...some other paths
+        path('auth-token/', obtain_auth_token, name="api_auth_token"),
+    ]
+    ```
+
+3. Run migrations to create authtoken table in the DB:
+
+    python manage.py makemigrations
+    python manage.py migrate
+
+3. generate the apitoken
+
+4. test the authentication using postman
