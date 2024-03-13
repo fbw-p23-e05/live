@@ -293,3 +293,151 @@ urlpatterns =[
 3. generate the apitoken
 
 4. test the authentication using postman
+
+
+## Authorization 
+
+- restricting access using permission classes
+
+1. create a blog app
+
+    django-admin startapp blog
+
+2. Activate the blog app in settings.py
+
+    ```python
+    INSTALLED_APPS = [
+        # ... other apps
+        'blog.apps.BlogConfig',
+    ]
+    ```
+
+3. Create a BlogPost model:
+
+    ```python
+    from django.utils.text import slugify
+
+    class BlogPost(models.Model):
+        title = models.CharField(max_length=200)
+        body = models.TextField()
+        published_on = models.DateTimeField(auto_now_add=True)
+        slug = models.SlugField()
+        category = models.CharField(max_length=50)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(str(self.title))
+        super(BlogPost, self).save(*args, **kwargs)
+    ```
+
+4. Create a serializer.py file and add a serializer for the BlogPost model:
+
+    ```python
+    from rest_framework import serializers
+    from .models import BlogPost
+
+    class BlogPostSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = BlogPost
+            exclude = ['slug', 'published_on']
+    ```
+
+
+5. Create a generic views for the BlogPost.
+
+    ```python
+    from django.shortcuts import render
+    from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView
+    from .serializers import BlogPostSerializer
+    from .models import BlogPost
+
+
+    class PostListView(ListCreateAPIView):
+        """Get a list of all posts
+        Create new posts.
+        """
+        queryset = BlogPost.objects.all()
+        serializer_class = BlogPostSerializer
+        
+        
+    class PostDetailView(RetrieveUpdateAPIView):
+        """Retrieve a specific post.
+        Update that post.
+        """
+        queryset = BlogPost.objects.all()
+        serializer_class = BlogPostSerializer
+    ```
+
+6. Add permissions to restrict access
+
+7. Create endpoints for the view
+
+    ```python
+    # blog/urls.py
+    from django.urls import path
+    from . import views
+
+    app_name = "blog"
+
+    urlpatterns = [
+        path("", views.PostListView.as_view(), name="post_list"),
+        path("<int:pk>/", views.PostDetailView.as_view(), name="post_detail"),
+    ]
+
+
+    #myproject/urls.
+
+    urlpatterns = [
+        path('api/blog/', include("blog.urls", namespace="blog")),
+    ]
+    ```
+
+8. Create migrations and migrate:
+
+    python manage.py makemigrations
+    python manage.py migrate
+
+9. Test our endpoints using Postman
+
+## Sanitization
+
+1. Install django html sanitizer:
+
+    pip install django-html_sanitizer
+
+2. Add to installed apps in settings.py:
+
+    ```python
+    INSTALLED_APPS = [
+        # other apps
+        "sanitizer",
+    ]
+    ```
+
+3. Modify the BlogPost model to use sanitized fields:
+
+    ```python 
+    from django.db import models
+    from django.utils.text import slugify
+    from sanitizer.models import SanitizedTextField # add this
+
+
+    class BlogPost(models.Model):
+        title = models.CharField(max_length=200)
+        body = SanitizedTextField(allowed_tags=['a', 'img', 'p'], allowed_attributes=['href', 'src', 'class']) # add this
+        published_on = models.DateTimeField(auto_now_add=True)
+        slug = models.SlugField()
+        category = models.CharField(max_length=50)
+
+        def save(self, *args, **kwargs):
+            self.slug = slugify(str(self.title))
+            super(BlogPost, self).save(*args, **kwargs)
+    ```
+
+4. modify settings.py and the following:
+
+    ```python
+    import django
+    from pathlib import Path
+    from django.utils.encoding import smart_str
+    django.utils.encoding.smart_text = smart_str
+    ```
