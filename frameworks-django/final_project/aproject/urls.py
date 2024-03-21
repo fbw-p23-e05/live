@@ -26,6 +26,9 @@ urlpatterns = [
     path('blog/', include('blog.urls', namespace='blog')),
     path('accounts/', include('user.urls', namespace='user')),
 
+    # api urls
+    path('api/', include('event.urls', namespace='event')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
