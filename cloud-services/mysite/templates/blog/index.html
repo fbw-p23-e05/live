@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+    <div class="section-latest">
+        <div class="container">
+            <h1>{{ welcome_text|title }}</h1>
+            <div class="row gutter-v1 align-items-stretch mb-5">
+                <div class="col-12">
+                    <h2 class="section-title">Latest Posts</h2>
+                </div>
+                {% for post in all_posts %}
+                    <div class="col-md-9 pr-md-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="post-entry horizontal d-md-flex">
+                                    <div class="media">
+                                        <!--Static Image from images folder-->
+                                        <img src="{% static 'images/img_h_3.jpg' %}" alt="Image" class="img-fluid">
+                                    </div>
+                                    <div class="text">
+                                        <div class="meta">
+                                            <span>{{post.created}}</span>
+                                            <span>&bullet;</span>
+                                            <span>{{post.author}}</span>
+                                        </div>
+                                        <h2>
+                                            <a href="{{ post.get_absolute_url }}">
+                                                {{post.title}}
+                                            </a>
+                                        </h2>
+                                        <p>{{ post.body|truncatewords:30|linebreaks }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>    
+        </div>
+    </div>
+{% endblock %}

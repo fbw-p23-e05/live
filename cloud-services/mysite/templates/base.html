@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ADD  CSS STATIC FILES -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}  {% endblock %}</title>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav class="site-nav">
+        <div class="row justify-content-between align-items-center">
+            <div class="d-none d-lg-block col-lg-3 top-menu">
+            </div>
+            <div class="col-3 d-lg-block col-md-6 col-lg-6 text-lg-center logo">
+              <a href="">Python<span class="text-primary">Bugs</span></a>
+            </div>
+            <div class="col-9 col-md-6 col-lg-3 py-3 text-right top-menu">
+              <div class="d-inline-flex align-items-center">
+              {% if request.user.is_authenticated %}
+              <a href="{% url 'account:logout' %}" class="d-inline-flex align-items-center">
+              <span>Logout</span>
+              </a>
+              {% else %}
+              <a href="{% url 'account:login' %}" class="d-inline-flex align-items-center mr-5">
+              <span>Login</span>
+              </a>
+              <a href="{% url 'account:register' %}" class="d-inline-flex align-items-center btn btn-primary-hover-outline">
+                <span>Register</span>
+              </a>
+              {% endif %}
+              </div>      
+            </div>
+          </div>
+          <div class="d-none d-lg-block row align-items-center py-3">
+            <div class="col-12 col-sm-12 col-lg-12 site-navigation text-center">
+              <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu">
+                <li><a href="{% url 'blog:home' %}">Home</a></li>
+              </ul>
+            </div>
+          </div>  
+        </div>
+      </nav> <!-- END nav -->
+    </div> <!-- END container -->
+  </header>
+    <main>
+        {% block content %}
+        <!-- Content goes here -->
+        {% endblock %}
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row justify-content-center copyright">
+                <div class="col-lg-7 text-center">      
+                    <div class="widget">
+                        <p>
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script>
+                            PythonBugs 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>
