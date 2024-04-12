@@ -23,6 +23,8 @@ Once you have your database and application up and running, you will install and
 
     ```shell
     sudo -u postgres psql
+    ```
+    ```sql
     CREATE DATABASE mysite;
     CREATE USER mysiteuser WITH PASSWORD 'deploy1234';
     GRANT ALL PRIVILEGES ON DATABASE mysite TO mysiteuser;
@@ -362,3 +364,155 @@ These commands are helpful for picking up changes as you adjust your configurati
 [What is Nginx? All you need to know](https://www.papertrail.com/solution/guides/nginx/#:~:text=NGINX%20processes%20highly%20efficient%20run,%2C%20binding%2C%20and%20crossing%20sockets.)
 
 [What is Nginx?](https://www.javatpoint.com/nginx-introduction)
+
+
+## Extending the deployment using S3 to store static files
+
+
+Amazon's Simple Storage System (S3) provides a simple, cost-effective way to store static files. We will configure Django to load and serve up static files, public and private, via an Amazon S3 bucket.
+
+Amazon provides a free tier with 5GB of S3 storage.
+
+1. To create an S3 bucket, navigate to the [S3 page](https://console.aws.amazon.com/s3) and click "Create bucket":
+
+    ![S3 Homepage](example_imgs/aws_s3_1.png)
+
+2. Give the bucket a unique, DNS-compliant name and leave "General Purpose" Selected:
+
+    ![Bucket Config](example_imgs/aws_s3_2.png)
+
+3. Under "Object Ownership", select "ACLs enabled". Turn off "Block all public access":
+
+    ![Object Ownership](example_imgs/aws_s3_5.png)
+
+4. Create the bucket. You should now see your bucket back on the main S3 page:
+
+    ![Bucket Created](example_imgs/aws_s3_3.png)
+
+**IAM Access**
+
+Although you could use the AWS root user, it's best for security to create an IAM user that only has access to S3 or to a specific S3 bucket. What's more, by setting up a group, it makes it much easier to assign (and remove) access to the bucket. So, we'll start by setting up a group with limited permissions and then create a user and assign that user to the group.
+
+**IAM Group**
+
+5. Within the AWS Console, navigate to the main IAM page and click "User groups" on the sidebar. Then, click the "Create group" button. Provide a name for the group and then search for and select the built-in policy "AmazonS3FullAccess":
+
+    ![AWS IAM Create](example_imgs/aws_iam_1.png)
+
+6. Click "Create Group" to finish setting up the group:
+
+    ![Group Creation Success](example_imgs/aws_iam_2.png)
+
+    > If you'd like to limit access even more, to the specific bucket we just created, create a new policy with the following permissions:
+    ```json
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": "s3:*",
+                "Resource": [
+                    "arn:aws:s3:::your-bucket-name",
+                    "arn:aws:s3:::your-bucket-name/*"
+                ]
+            }
+        ]
+    }
+    ```
+    > Be sure to replace your-bucket-name with the actual name. Then, detach the "AmazonS3FullAccess" policy from the group and attach the new policy.
+
+7. **IAM User**
+
+    Back on the main IAM page, click "Users" and then "Create user". Define a user name and click the next button.
+
+    ![IAM User step 1](example_imgs/aws_iam_3.png)
+
+8. In the "Permissions" step, Select the group we just created the click next:
+
+    ![IAM User step 2](example_imgs/aws_iam_4.png)
+
+9. Click "Create user" to create the new user.
+
+    ![IAM User step 3](example_imgs/aws_iam_0.png)
+
+10. Now click on the user name to view the user details. Click on the "Security credentials" tab and then click "Create access key". Choose "Application running on an AWS compute service" and click the next button.
+
+    ![](example_imgs/aws_iam_7.png)
+
+11. After that, click on "Create access key" button and take note of the keys.
+
+    ![](example_imgs/aws_iam_8.png)
+
+**Django Storages**
+
+12. Next, connect to your AWS EC2 instance and navigate to your project directory. Activate your virtual environment. 
+
+13. Using pip install `django-storages`, to use S3 as the main Django storage backend, and `boto3`, to interact with the AWS API.
+
+    ```shell
+    pip install boto3 django-storages
+    ```
+
+14. Add `storages` to the `INSTALLED_APPS` in settings.py.
+
+**Static Files**
+
+15. Moving along, we need to update the handling of static files in settings.py:
+
+    ```python
+    STATIC_URL = "static/"
+    STATICFILES_DIRS = [BASE_DIR/'static/']
+    STATIC_ROOT =  '/var/www/html/'
+    ```
+    Replace those settings with the following:
+
+    ```python
+    # aws settings
+    AWS_ACCESS_KEY_ID = <yOUR KEY ID>
+    AWS_SECRET_ACCESS_KEY = <YOUR ACCESS KEY>
+    AWS_STORAGE_BUCKET_NAME = <YOUR BUCKET NAME>
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+    # s3 static settings
+    AWS_LOCATION = 'static'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+    ```
+
+    > The `STATICFILES_STORAGE` setting configures Django to automatically add static files to the S3 bucket when the `collectstatic` command is run.
+
+16. Collect the static files:
+
+    ```shell
+    python manage.py collectstatic
+    ```
+
+17. Edit the file `/etc/nginx/sites-available/mysite` to look like this:
+
+    ```nginx
+    server {
+            listen 80;
+            server_name 54.92.164.66;
+
+            location /static/ {
+                    proxy_pass <YOUR STATIC URL>;
+            }
+
+            location / {
+                    include proxy_params;
+                    proxy_pass http://unix:/run/gunicorn.sock;
+            }
+    }
+    ```
+
+18. Restart Nginx and Gunicorn
+
+    ```shell
+    sudo systemctl daemon-reload
+    sudo systemctl restart gunicorn
+    sudo systemctl restart nginx
+    ```
