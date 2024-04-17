@@ -210,8 +210,8 @@ Once you have the Role created:
 * Go to the Instances link
 * Highlight the Instance
 * Click on Actions
-* Instance Settings
-* Attach/Replace IAM Role
+* Security
+* Modify IAM Role
 * Select the SSM Role you had created earlier
 * Hit Apply to save changes
 
@@ -244,9 +244,9 @@ Next, let's create a bash script to download dependencies and restart NGINX and 
 
 Fill the contents with the bash commands we ran to build the project earlier:
 ```shell
-#!/bin/sh     
+#!/bin/bash     
 sudo git pull origin master
-sudo pip3 install -r requirements.txt
+sudo pip install -r requirements.txt
 python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py collectstatic
@@ -273,26 +273,26 @@ Paste in the following:
 name: Deploy using AWS SSM Send-Command 
 
 on:
-push:
-branches: [master]
+ push:
+  branches: [master]
 
 jobs:
-start:
-runs-on: ubuntu-latest 
+ start:
+  runs-on: ubuntu-latest 
 
-steps:
-			  - uses: actions/checkout@v2
+  steps:
+  - uses: actions/checkout@v2
 
-			  - name: AWS SSM Send Command
-			  uses: peterkimzz/aws-ssm-send-command@1.0.1
-			  with:
-			  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID  }}
-			  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY  }}
-			  aws-region: us-east-1
-			  instance-ids: ${{ secrets.INSTANCE_ID  }}
-			  comment: Deploy the master branch
-			  working-directory: /home/ubuntu/<YOUR PROJECT DIRECTORY>
-			  command: /bin/sh ./deploy.sh
+  - name: AWS SSM Send Command
+    uses: peterkimzz/aws-ssm-send-command@1.0.1
+    with:
+     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID  }}
+     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY  }}
+     aws-region: <YOUR EC2 REGION>
+     instance-ids: ${{ secrets.INSTANCE_ID  }}
+     comment: Deploy the master branch
+     working-directory: /home/ubuntu/<YOUR PROJECT DIRECTORY>
+     command: /bin/bash ./deploy.sh
 ```
 
 The Secrets we provided to the repo earlier comes into use in this script.
